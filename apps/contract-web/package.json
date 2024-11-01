@@ -1,0 +1,31 @@
+{
+  "name": "contract-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port 3000",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/apollo": "^5.0.0-alpha.14",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@vue/apollo-composable": "^4.2.1",
+    "eslint": "^8.57.0",
+    "eslint-config-custom": "*",
+    "nuxt": "^3.10.3",
+    "tsconfig": "*",
+    "vite-plugin-vuetify": "^2.0.4",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0",
+    "vuetify": "^3.7.3"
+  }
+}
