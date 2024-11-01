@@ -1,0 +1,47 @@
+name: Deploy API and Web App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_api:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 22.10.0
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: |
+          yarn turbo run build --filter=contract-service
+
+  build_web:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 22.10.0
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: |
+          yarn turbo run build --filter=contract-web
