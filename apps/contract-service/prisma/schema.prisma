@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contract {
+  id           Int            @id @default(autoincrement())
+  uuid         String         @default(uuid())
+  name         String
+  amount       Float
+  currency     Currency
+  identifier   String         @unique
+  description  String
+  status       ContractStatus
+  startDate    DateTime       @map("start_date")
+  endDate      DateTime       @map("end_date")
+  reniewDate   DateTime       @map("reniew_date")
+  contractorId Int            @map("contractor_id")
+  contractedId Int            @map("contracted_id")
+  createdAt    DateTime       @map("created_at")
+  updatedAt    DateTime       @map("updated_at")
+  deletedAt    DateTime?      @map("deactivated_at")
+  contractor   Customer       @relation("contractor", fields: [contractorId], references: [id])
+  contracted   Customer       @relation("contracted", fields: [contractedId], references: [id])
+
+  @@map("contract")
+}
+
+model Customer {
+  id         Int        @id @default(autoincrement())
+  uuid       String     @default(uuid())
+  name       String
+  email      String     @unique
+  address    String     @unique
+  identity   String     @unique
+  createdAt  DateTime   @map("created_at")
+  updatedAt  DateTime   @map("updated_at")
+  deletedAt  DateTime?  @map("deactivated_at")
+  contractor Contract[] @relation("contractor")
+  contracted Contract[] @relation("contracted")
+
+  @@map("customer")
+}
+
+enum Currency {
+  USD
+  BRL
+}
+
+enum ContractStatus {
+  draft
+  signed
+  canceled
+  not_signed
+  terminated
+}
