@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+
+  api:
+    container_name: contract-service
+    build:
+      context: .
+      dockerfile: ./apps/contract-service/Dockerfile
+    env_file: .env
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+    networks:
+      - contract
+  
+  web:
+    container_name: contract-web
+    build:
+      context: .
+      dockerfile: ./apps/contract-web/Dockerfile
+    env_file: .env
+    ports:
+      - '3000:3000'
+    networks:
+      - contract
+
+  db:
+    container_name: postgres-db
+    image: postgres:13-alpine
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - contract
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  contract:
+    driver: bridge
+
+volumes:
+    postgres:
+
