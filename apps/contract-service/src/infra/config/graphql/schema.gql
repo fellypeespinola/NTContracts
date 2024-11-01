@@ -1,0 +1,74 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ContractSchemaGQL {
+  id: Int!
+  name: String!
+  amount: Int!
+  currency: String!
+  identifier: String!
+  description: String!
+  status: String!
+  endDate: DateTime!
+  startDate: DateTime!
+  reniewDate: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CustomerSchemaGQL {
+  id: Int!
+  name: String!
+  email: String!
+  identity: String!
+  address: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type Query {
+  getContract(id: Float!): ContractSchemaGQL!
+  getAllContracts: [ContractSchemaGQL!]!
+  getCustomer(id: Float!): CustomerSchemaGQL!
+  getAllCustomers: [CustomerSchemaGQL!]!
+}
+
+type Mutation {
+  createContract(createContractInput: CreateContractInput!): ContractSchemaGQL!
+  updateContract(updateContractInput: UpdateContractInput!): ContractSchemaGQL!
+}
+
+input CreateContractInput {
+  name: String!
+  amount: Int!
+  currency: String!
+  description: String!
+  status: String!
+  endDate: DateTime!
+  startDate: DateTime!
+  reniewDate: DateTime!
+  contractorId: Int!
+  contractedId: Int!
+}
+
+input UpdateContractInput {
+  id: Int!
+  name: String
+  amount: Int
+  currency: String
+  identifier: String
+  description: String
+  status: String
+  endDate: DateTime
+  startDate: DateTime
+  reniewDate: DateTime
+  contractorId: Int
+  contractedId: Int
+}
